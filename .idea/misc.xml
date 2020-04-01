@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="GeneratorPluginComponent">
+    <option name="variableInitializers">
+      <TypeToTextMapping>
+        <option name="mapping">
+          <map>
+            <entry key="java.util.ArrayList">
+              <value>
+                <Entry>
+                  <option name="text" value="new java.util.ArrayList$&lt;&gt;$()" />
+                  <option name="type" value="java.util.ArrayList" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.Collection">
+              <value>
+                <Entry>
+                  <option name="text" value="java.util.Collections.$&lt;&gt;$emptySet()" />
+                  <option name="type" value="java.util.Collection" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.HashMap">
+              <value>
+                <Entry>
+                  <option name="text" value="new java.util.HashMap$&lt;&gt;$()" />
+                  <option name="type" value="java.util.HashMap" />
+                  <option name="isAddRemoveMethodRequested" value="false" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.HashSet">
+              <value>
+                <Entry>
+                  <option name="text" value="new java.util.HashSet$&lt;&gt;$()" />
+                  <option name="type" value="java.util.HashSet" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.LinkedHashSet">
+              <value>
+                <Entry>
+                  <option name="text" value="new java.util.LinkedHashSet$&lt;&gt;$()" />
+                  <option name="type" value="java.util.LinkedHashSet" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.List">
+              <value>
+                <Entry>
+                  <option name="text" value="java.util.Collections.$&lt;&gt;$emptyList()" />
+                  <option name="type" value="java.util.List" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.Set">
+              <value>
+                <Entry>
+                  <option name="text" value="java.util.Collections.$&lt;&gt;$emptySet()" />
+                  <option name="type" value="java.util.Set" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+            <entry key="java.util.SortedSet">
+              <value>
+                <Entry>
+                  <option name="text" value="new java.util.TreeSet$&lt;&gt;$()" />
+                  <option name="type" value="java.util.SortedSet" />
+                  <option name="isAddRemoveMethodRequested" value="true" />
+                </Entry>
+              </value>
+            </entry>
+          </map>
+        </option>
+      </TypeToTextMapping>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

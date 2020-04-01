@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+    <color name="color_black_50">#99000000</color>
+    <color name="color_transparent">#00000000</color>
+
+
+    <!-- voice_home   -->
+
+    <color name="color_voice_indicator_circle_0">#7b59d1</color>
+    <color name="color_voice_indicator_circle_1">#504dce</color>
+    <color name="color_voice_indicator_circle_2">#d249d2</color>
+    <color name="color_voice_indicator_circle_3">#ffca29</color>
+    <color name="color_voice_indicator_circle_4">#2deb9d</color>
+
+    <color name="color_voice_indicator_circle_system_0">#ff5f5f</color>
+    <color name="color_voice_indicator_circle_system_1">#ff9b5e</color>
+    <color name="color_voice_indicator_circle_system_2">#e5e761</color>
+    <color name="color_voice_indicator_circle_system_3">#7fff75</color>
+    <color name="color_voice_indicator_circle_system_4">#2d6ceb</color>
+
+</resources>
