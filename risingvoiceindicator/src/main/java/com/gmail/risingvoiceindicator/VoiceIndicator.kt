@@ -189,6 +189,7 @@ class VoiceIndicator : View {
                 }
             })
             animators.add(scaleAnim)
+
         }
         for (animator in animators) {
             animator.start()
