@@ -36,8 +36,7 @@ class RisingVoiceIndicator : RelativeLayout {
     }
 
     private fun getAttrs(attrs: AttributeSet?) {
-        val typedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.RisingVoiceIndicator)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RisingVoiceIndicator)
         setTypeArray(typedArray)
     }
 

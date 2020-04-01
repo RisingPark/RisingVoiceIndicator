@@ -87,7 +87,7 @@ class VoiceIndicator : View {
     }
 
     private fun setTypeArray(typedArray: TypedArray) {
-        mRadius = typedArray.getDimension(R.styleable.VoiceIndicator_radius, mRadius)
+        mRadius = typedArray.getDimension(R.styleable.VoiceIndicator_voice_indicator_radius, mRadius)
     }
 
     @SuppressLint("DrawAllocation")
@@ -168,8 +168,7 @@ class VoiceIndicator : View {
             } else {
                 decibel
             }
-            val scaleAnim =
-                ValueAnimator.ofFloat(translateTemp[i], height / 2 - boundHeight)
+            val scaleAnim = ValueAnimator.ofFloat(translateTemp[i], height / 2 - boundHeight)
             scaleAnim.duration = 200
             scaleAnim.repeatCount = 0
             scaleAnim.addUpdateListener(AnimatorUpdateListener { animation ->
