@@ -3,6 +3,7 @@ package com.gmail.risingvoiceindicator
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.gmail.risingvoiceindicator.Utils.Companion.getRandomNumber
@@ -14,12 +15,12 @@ class RisingVoiceIndicator : RelativeLayout {
     private var mType = 0
     private var thread: Thread? = null
     private var mRadius = 20f
+    private lateinit var mBallColors : IntArray
 
     constructor(context: Context?) : super(context) {}
     constructor(context: Context, attrs: AttributeSet) : super(
         context,
-        attrs
-    ) {
+        attrs) {
         getAttrs(attrs)
         init(context, attrs)
 
@@ -52,32 +53,47 @@ class RisingVoiceIndicator : RelativeLayout {
 
     private fun setTypeArray(typedArray: TypedArray) {
         mRadius = typedArray.getDimension(R.styleable.RisingVoiceIndicator_radius, mRadius)
+        val colorsId = typedArray.getResourceId(R.styleable.RisingVoiceIndicator_ball_colors, R.array.default_ball_colors)
+        mBallColors = typedArray.resources.getIntArray(colorsId)
+        typedArray.recycle()
     }
 
     private fun init(context: Context, attrs: AttributeSet) {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.view_voice_indicator, this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.view_voice_indicator, this, true)
         upperIndicator = view.findViewById(R.id.upper_indicator)
         underIndicator = view.findViewById(R.id.under_indicator)
+
+        setRadius(mRadius)
+        setBallColors(mBallColors)
+    }
+
+    fun setRadius(radius: Float) {
+        upperIndicator?.setRadius(radius)
+        underIndicator?.setRadius(radius)
+    }
+
+    fun setBallColors(ballColors: IntArray) {
+        upperIndicator?.setBallColors(ballColors)
+        underIndicator?.setBallColors(ballColors)
     }
 
     @JvmOverloads
     fun startAnimation(type: Int = VoiceIndicator.START_USER) {
         mType = type
         makeSystemDecibel()
-        upperIndicator!!.startAnimation(type)
-        underIndicator!!.startAnimation(type)
+        upperIndicator?.startAnimation(type)
+        underIndicator?.startAnimation(type)
     }
 
     fun stopAnimation() {
         stopSystemDecibel()
-        upperIndicator!!.stopAnimation()
-        underIndicator!!.stopAnimation()
+        upperIndicator?.stopAnimation()
+        underIndicator?.stopAnimation()
     }
 
-    fun setDb(dB: Float) {
-        upperIndicator!!.db = dB
-        underIndicator!!.db = dB
+    fun setDecibel(dB: Float) {
+        upperIndicator?.db = dB
+        underIndicator?.db = dB
     }
 
     /**
@@ -85,8 +101,7 @@ class RisingVoiceIndicator : RelativeLayout {
      */
     private fun makeSystemDecibel() {
         if (mType == VoiceIndicator.START_SYSTEM
-            && thread == null
-        ) {
+            && thread == null) {
             thread = Thread(Runnable {
                 try {
                     while (!thread!!.isInterrupted) {

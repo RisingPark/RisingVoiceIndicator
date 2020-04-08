@@ -12,54 +12,41 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.gmail.risingvoiceindicator.RisingVoiceIndicator
 import java.util.*
 
 /**
  * Created by cor.park on 2020-03-31.
  */
 class VoiceIndicator : View {
-    private val delays = intArrayOf(70, 140, 210, 280, 350)
-    private val translateYFloats = FloatArray(4)
-    private val translateCopy = FloatArray(4)
-    private val translateTemp = FloatArray(4)
 
-    private val colorsStop = intArrayOf(
-        R.color.color_voice_indicator_circle_0,
-        R.color.color_voice_indicator_circle_1,
-        R.color.color_voice_indicator_circle_2,
-        R.color.color_voice_indicator_circle_3
-    )
-    private val colorsUser = intArrayOf(
-        R.color.color_voice_indicator_circle_0,
-        R.color.color_voice_indicator_circle_1,
-        R.color.color_voice_indicator_circle_2,
-        R.color.color_voice_indicator_circle_3
-    )
-    private val colorsSystem = intArrayOf(
-        R.color.color_voice_indicator_circle_system_0,
-        R.color.color_voice_indicator_circle_system_1,
-        R.color.color_voice_indicator_circle_system_2,
-        R.color.color_voice_indicator_circle_system_3
-    )
+    private val delays = ArrayList<Int>()
+    private lateinit var translateYFloats: FloatArray
+    private lateinit var translateCopy: FloatArray
+    private lateinit var translateTemp: FloatArray
+    private lateinit var colorsStop: IntArray
+    private lateinit var colorsUser: IntArray
+    private lateinit var colorsSystem: IntArray
     private val animators = ArrayList<ValueAnimator>()
     private var isFirst = true
-    private var mDecibel = 30.0f
     private var isRunning = false
     private var isStopping = false
     private var isInterceptor = false
+    private var mBallSize: Int = 0
+    private var mDecibel = 30.0f
     private var mRadius = 20f
     private var mType = 0
     private var mTempType = 0
-    private var ballSize = colorsStop.size -1
 
-    constructor(context: Context?) : super(context) {}
+
+    constructor(context: Context?) : super(context) {
+        init()
+    }
     constructor(context: Context?, attrs: AttributeSet?) : super(
         context,
         attrs
     ) {
         getAttrs(attrs)
+        init()
     }
 
     constructor(
@@ -68,12 +55,13 @@ class VoiceIndicator : View {
         defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr) {
         getAttrs(attrs, defStyleAttr)
+        init()
     }
 
     private fun getAttrs(attrs: AttributeSet?) {
-        val typedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.VoiceIndicator)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.VoiceIndicator)
         setTypeArray(typedArray)
+        init()
     }
 
     private fun getAttrs(attrs: AttributeSet?, defStyle: Int) {
@@ -84,10 +72,53 @@ class VoiceIndicator : View {
             0
         )
         setTypeArray(typedArray)
+        init()
     }
 
     private fun setTypeArray(typedArray: TypedArray) {
         mRadius = typedArray.getDimension(R.styleable.VoiceIndicator_voice_indicator_radius, mRadius)
+        typedArray.recycle()
+    }
+
+    private fun init() {
+        colorsStop = resources.getIntArray(R.array.default_ball_colors)
+        colorsUser = resources.getIntArray(R.array.default_ball_colors)
+        colorsSystem = resources.getIntArray(R.array.default_ball_colors)
+        mBallSize = colorsStop.size -1
+
+        setArraySize(colorsStop.size)
+    }
+
+    private fun setDelay() {
+        delays.clear()
+        for(i in 1..mBallSize+1) {
+            delays.add(70*i)
+        }
+    }
+
+    /**
+     * ball radius
+     */
+    fun setRadius(radius: Float) {
+        mRadius = radius
+        invalidate()
+    }
+
+    /**
+     * color of balls
+     */
+    fun setBallColors(colors: IntArray) {
+        colorsStop = colors
+        colorsUser = colors
+        mBallSize = colorsStop.size -1
+        setArraySize(colorsStop.size)
+    }
+
+    private fun setArraySize(size: Int) {
+        translateYFloats = FloatArray(size)
+        translateCopy = FloatArray(size)
+        translateTemp = FloatArray(size)
+        setDelay()
     }
 
     @SuppressLint("DrawAllocation")
@@ -95,7 +126,7 @@ class VoiceIndicator : View {
         super.onDraw(canvas)
         val circleSpacing = 30f
         val x = width / 2 - (mRadius * 5 + circleSpacing)
-        for (i in 0..ballSize) {
+        for (i in 0..mBallSize) {
             canvas.save()
             val translateX = x + mRadius * 2 * i + circleSpacing * i
             val paintUpperBall = Paint()
@@ -105,28 +136,22 @@ class VoiceIndicator : View {
                 translateYFloats[i] = yPos.toFloat()
                 translateCopy[i] = yPos.toFloat()
                 translateTemp[i] = yPos.toFloat()
-                if (i == ballSize) {
+                if (i == mBallSize) {
                     isFirst = false
                 }
             }
             when (mType) {
                 STOP -> {
-                    paintUpperBall.color = ContextCompat.getColor(context, colorsStop[i])
-                    paintUpperLine.color = ContextCompat.getColor(context, colorsStop[i])
+                    paintUpperBall.color = colorsStop[i]
+                    paintUpperLine.color = colorsStop[i]
                 }
                 START_USER -> {
-                    paintUpperBall.color = ContextCompat.getColor(context, colorsUser[i])
-                    paintUpperLine.color = ContextCompat.getColor(context, colorsUser[i])
+                    paintUpperBall.color = colorsUser[i]
+                    paintUpperLine.color = colorsUser[i]
                 }
                 START_SYSTEM -> {
-                    paintUpperBall.color = ContextCompat.getColor(
-                        context,
-                        colorsSystem[i]
-                    )
-                    paintUpperLine.color = ContextCompat.getColor(
-                        context,
-                        colorsSystem[i]
-                    )
+                    paintUpperBall.color = colorsSystem[i]
+                    paintUpperLine.color = colorsSystem[i]
                 }
             }
             paintUpperLine.strokeWidth = mRadius * 2
@@ -146,10 +171,9 @@ class VoiceIndicator : View {
     /**
      * 애니메이션 시작
      * 유저 발화와 시스템 발화 컬러 변경
-     * @param type START_USER,START_SYSTEM  발화
+     * @param type START_USER, START_SYSTEM  발화
      */
     fun startAnimation(type: Int) {
-        Log.d("corpark", "[startAnimation]$type")
         mTempType = type
         mType = type
         val dB = db
@@ -162,12 +186,9 @@ class VoiceIndicator : View {
         isRunning = true
         clearAnim()
         var boundHeight: Float
-        for (i in 0..ballSize) {
-            boundHeight = if (i == 1 || i == 3) {
-                decibel * 0.7f
-            } else {
-                decibel
-            }
+        for (i in 0..mBallSize) {
+            boundHeight = if (i%2 != 0) decibel * 0.7f  else decibel
+
             val scaleAnim = ValueAnimator.ofFloat(translateTemp[i], height / 2 - boundHeight)
             scaleAnim.duration = 200
             scaleAnim.repeatCount = 0
@@ -181,7 +202,7 @@ class VoiceIndicator : View {
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     translateTemp[i] = translateYFloats[i]
-                    if (i == ballSize) {
+                    if (i == mBallSize) {
                         isRunning = false
                         if (isInterceptor) return
                         oneCycleAnimation(db)
@@ -197,7 +218,7 @@ class VoiceIndicator : View {
     }
 
     /**
-     * 애니메이션 스탑
+     * stop Animation
      */
     fun stopAnimation() {
         isInterceptor = true
@@ -205,7 +226,7 @@ class VoiceIndicator : View {
         isStopping = true
         clearAnim()
         // 기존 자리로 이동
-        for (i in 0..ballSize) {
+        for (i in 0..mBallSize) {
             val scaleAnim =
                 ValueAnimator.ofFloat(translateYFloats[i], translateCopy[i])
             scaleAnim.duration = 400
@@ -219,8 +240,7 @@ class VoiceIndicator : View {
             scaleAnim.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
-                    Log.d("cor.park", "onAnimationEnd$mType")
-                    if (i == ballSize) {
+                    if (i == mBallSize) {
                         isStopping = false
                         isInterceptor = false
                         mType = STOP
@@ -236,7 +256,7 @@ class VoiceIndicator : View {
     }
 
     /**
-     * 애니메이션 제거
+     * clear Animation
      */
     private fun clearAnim() {
         for (animator in animators) {

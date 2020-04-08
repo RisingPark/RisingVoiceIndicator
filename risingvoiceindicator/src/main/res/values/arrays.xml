@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="ball_colors">
+        <item>@color/color_voice_indicator_circle_0_test</item>
+        <item>@color/color_voice_indicator_circle_1_test</item>
+        <item>@color/color_voice_indicator_circle_2_test</item>
+        <item>@color/color_voice_indicator_circle_3_test</item>
+    </integer-array>
+
+    <integer-array name="default_ball_colors">
+        <item>@color/color_voice_indicator_circle_0</item>
+        <item>@color/color_voice_indicator_circle_1</item>
+        <item>@color/color_voice_indicator_circle_2</item>
+        <item>@color/color_voice_indicator_circle_3</item>
+    </integer-array>
+
+</resources>

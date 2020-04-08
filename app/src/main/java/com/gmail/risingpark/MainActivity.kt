@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import com.gmail.risingvoiceindicator.VoiceIndicator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.floor
+import kotlin.math.log10
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,16 +56,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun startRecorder() {
         if (mRecorder == null) {
-            mRecorder = MediaRecorder()
-            mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-            mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            mRecorder!!.setOutputFile("/dev/null")
-            try {
-                mRecorder!!.prepare()
-                mRecorder!!.start()
-            } catch (e: Exception) {
-                Log.e("cor.park", "IOException: " + Log.getStackTraceString(e))
+            mRecorder = MediaRecorder().apply {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                setOutputFile("/dev/null")
+                try {
+                    prepare()
+                    start()
+                } catch (e: Exception) {
+                    Log.e("cor.park", "IOException: " + e.stackTrace)
+                }
             }
         }
 
@@ -76,9 +78,8 @@ class MainActivity : AppCompatActivity() {
                         mHandler.post(Runnable {
                             updateDb()
                             Log.d("risingpark", "[soundDb]"+soundDb())
-                            voice_indicator.setDb(soundDb().toFloat())
+                            voice_indicator.setDecibel(soundDb().toFloat())
                         })
-
                     }
                 } catch (e :InterruptedException) {
                     thread = null
@@ -91,13 +92,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun stopRecorder() {
-        if (mRecorder != null) {
+        mRecorder?.run {
             try {
-                mRecorder!!.stop()
+                stop()
             } catch (e :Exception){}
-            mRecorder!!.release()
-            mRecorder = null
+            release()
         }
+        mRecorder = null
 
         thread?.interrupt()
         voice_indicator.stopAnimation()
@@ -105,11 +106,11 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun updateDb() {
-        decibel_text.setText(soundDb().toInt().toString() + " dB")
+        decibel_text?.text = soundDb().toInt().toString() + " dB"
     }
 
     fun soundDb(): Double {
-        return 20 * Math.log10(getAmplitude())
+        return 20 * log10(getAmplitude())
     }
 
 

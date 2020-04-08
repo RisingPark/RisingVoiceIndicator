@@ -11,7 +11,6 @@
 
 
     <!-- voice_home   -->
-
     <color name="color_voice_indicator_circle_0">#7b59d1</color>
     <color name="color_voice_indicator_circle_1">#504dce</color>
     <color name="color_voice_indicator_circle_2">#d249d2</color>
@@ -23,5 +22,10 @@
     <color name="color_voice_indicator_circle_system_2">#e5e761</color>
     <color name="color_voice_indicator_circle_system_3">#7fff75</color>
     <color name="color_voice_indicator_circle_system_4">#2d6ceb</color>
+
+    <color name="color_voice_indicator_circle_0_test">#CDDC39</color>
+    <color name="color_voice_indicator_circle_1_test">#9C27B0</color>
+    <color name="color_voice_indicator_circle_2_test">#03A9F4</color>
+    <color name="color_voice_indicator_circle_3_test">#E91E63</color>
 
 </resources>
