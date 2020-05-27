@@ -6,6 +6,23 @@
 
 ## Usage
 
+### Gradle:
+project gradle:
+```xml
+allprojects {
+    repositories {
+        maven { url "https://www.jitpack.io" }
+    }
+}
+```
+app gradle:
+```xml
+dependencies {
+    implementation 'com.github.risingpark:risingvoiceindicator:1.0.0'
+}
+```
+
+
 ### In layout
 ```xml
     <com.risingpark.risingvoiceindicator.RisingVoiceIndicator
