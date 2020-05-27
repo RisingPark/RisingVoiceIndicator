@@ -1,5 +1,20 @@
 # RisingVoiceIndicator
 
-working...
 
-![voice_indicator](https://user-images.githubusercontent.com/62924824/82965941-98acdb80-a004-11ea-9476-4bb8fab6fe80.gif)
+## Usage
+
+### RisingVoiceIndicator in layout
+```xml
+    <com.risingpark.risingvoiceindicator.RisingVoiceIndicator
+        android:id="@+id/voice_indicator"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:radius="5dp"
+        app:ball_colors="@array/ball_colors"/>
+```
+
+|Attributes|format|describe
+|---|---|---|
+|radius|dimension| circle radius size
+|ball_colors|array| resource colors. The circle increases as the color increases.
