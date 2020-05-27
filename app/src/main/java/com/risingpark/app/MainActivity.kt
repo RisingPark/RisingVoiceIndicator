@@ -1,4 +1,4 @@
-package com.gmail.risingpark
+package com.risingpark.app
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -10,18 +10,19 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.gmail.risingvoiceindicator.VoiceIndicator
+import com.risingpark.risingvoiceindicator.VoiceIndicator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.math.floor
 import kotlin.math.log10
 
-
+/**
+ * Demo Activity
+ */
 class MainActivity : AppCompatActivity() {
 
     private var mIsOn :Boolean = false
-    var mRecorder :MediaRecorder? = null
-    var thread :Thread? = null
-    var mHandler = Handler()
+    private var mRecorder :MediaRecorder? = null
+    private var mThread :Thread? = null
+    private var mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,30 +66,29 @@ class MainActivity : AppCompatActivity() {
                     prepare()
                     start()
                 } catch (e: Exception) {
-                    Log.e("cor.park", "IOException: " + e.stackTrace)
+                    Log.e("risingpark", "IOException: " + e.stackTrace)
                 }
             }
         }
 
-        if (thread == null) {
-            thread = Thread(Runnable {
+        if (mThread == null) {
+            mThread = Thread(Runnable {
                 try {
                     while (true){
-                        Thread.sleep(200)
+                        Thread.sleep(100)
+                        voice_indicator.setDecibel(soundDb().toFloat())
                         mHandler.post(Runnable {
                             updateDb()
-                            Log.d("risingpark", "[soundDb]"+soundDb())
-                            voice_indicator.setDecibel(soundDb().toFloat())
                         })
                     }
                 } catch (e :InterruptedException) {
-                    thread = null
+                    mThread = null
                 }
             })
-            thread?.start()
+            mThread?.start()
         }
 
-        voice_indicator.startAnimation(VoiceIndicator.START_USER)
+        voice_indicator.start()
     }
 
     private fun stopRecorder() {
@@ -100,8 +100,8 @@ class MainActivity : AppCompatActivity() {
         }
         mRecorder = null
 
-        thread?.interrupt()
-        voice_indicator.stopAnimation()
+        mThread?.interrupt()
+        voice_indicator.stop()
     }
 
     @SuppressLint("SetTextI18n")

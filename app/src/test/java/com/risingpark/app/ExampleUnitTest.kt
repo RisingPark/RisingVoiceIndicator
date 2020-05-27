@@ -1,4 +1,4 @@
-package com.gmail.risingvoiceindicator
+package com.risingpark.app
 
 import org.junit.Test
 

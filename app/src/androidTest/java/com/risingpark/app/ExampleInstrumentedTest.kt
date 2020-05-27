@@ -1,4 +1,4 @@
-package com.gmail.risingvoiceindicator
+package com.risingpark.app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.gmail.risingvoiceindicator.test", appContext.packageName)
+        assertEquals("com.gmail.risingpark", appContext.packageName)
     }
 }

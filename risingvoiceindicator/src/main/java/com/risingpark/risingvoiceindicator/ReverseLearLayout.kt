@@ -1,4 +1,4 @@
-package com.gmail.risingvoiceindicator
+package com.risingpark.risingvoiceindicator
 
 import android.content.Context
 import android.graphics.Canvas

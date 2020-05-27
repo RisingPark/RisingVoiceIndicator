@@ -16,11 +16,11 @@
         android:textColor="@color/color_black"
         android:text="dB"/>
 
-    <com.gmail.risingvoiceindicator.RisingVoiceIndicator
+    <com.risingpark.risingvoiceindicator.RisingVoiceIndicator
         android:id="@+id/voice_indicator"
         android:layout_centerInParent="true"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:radius="@dimen/voice_ball_indicator_size"
         app:ball_colors="@array/ball_colors"/>
 

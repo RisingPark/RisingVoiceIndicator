@@ -1,4 +1,4 @@
-package com.gmail.risingvoiceindicator
+package com.risingpark.risingvoiceindicator
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -15,7 +15,7 @@ import android.view.View
 import java.util.*
 
 /**
- * Created by cor.park on 2020-03-31.
+ * Created by risingpark on 2020-03-31.
  */
 class VoiceIndicator : View {
 
@@ -36,6 +36,7 @@ class VoiceIndicator : View {
     private var mRadius = 20f
     private var mType = 0
     private var mTempType = 0
+    private val mCircleSpacing = 30f
 
 
     constructor(context: Context?) : super(context) {
@@ -121,14 +122,22 @@ class VoiceIndicator : View {
         setDelay()
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        var calWidth = 0.0f
+        val padding = 150
+        calWidth += mRadius * 2 * mBallSize + mCircleSpacing * mBallSize + padding
+        setMeasuredDimension(calWidth.toInt(), resources.getDimension(R.dimen.default_height).toInt())
+    }
+
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val circleSpacing = 30f
-        val x = width / 2 - (mRadius * 5 + circleSpacing)
+        val x = (width / 2) - (mRadius * 2 * mBallSize + mCircleSpacing * mBallSize) / 2
         for (i in 0..mBallSize) {
             canvas.save()
-            val translateX = x + mRadius * 2 * i + circleSpacing * i
+            val translateX = x + mRadius * 2 * i + mCircleSpacing * i
             val paintUpperBall = Paint()
             val paintUpperLine = Paint()
             if (isFirst) {

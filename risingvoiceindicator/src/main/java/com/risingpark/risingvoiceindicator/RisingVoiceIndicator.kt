@@ -1,12 +1,11 @@
-package com.gmail.risingvoiceindicator
+package com.risingpark.risingvoiceindicator
 
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
-import com.gmail.risingvoiceindicator.Utils.Companion.getRandomNumber
+import com.risingpark.risingvoiceindicator.Utils.Companion.getRandomNumber
 
 class RisingVoiceIndicator : RelativeLayout {
 
@@ -77,15 +76,16 @@ class RisingVoiceIndicator : RelativeLayout {
         underIndicator?.setBallColors(ballColors)
     }
 
+
     @JvmOverloads
-    fun startAnimation(type: Int = VoiceIndicator.START_USER) {
+    fun start(type: Int = VoiceIndicator.START_USER) {
         mType = type
         makeSystemDecibel()
         upperIndicator?.startAnimation(type)
         underIndicator?.startAnimation(type)
     }
 
-    fun stopAnimation() {
+    fun stop() {
         stopSystemDecibel()
         upperIndicator?.stopAnimation()
         underIndicator?.stopAnimation()
@@ -94,6 +94,10 @@ class RisingVoiceIndicator : RelativeLayout {
     fun setDecibel(dB: Float) {
         upperIndicator?.db = dB
         underIndicator?.db = dB
+    }
+
+    fun getDecibel():Float? {
+        return upperIndicator?.db
     }
 
     /**

@@ -2,6 +2,8 @@
 <resources>
 
     <dimen name="voice_ball_indicator_size">5dp</dimen>
+    <dimen name="default_width">200dp</dimen>
+    <dimen name="default_height">100dp</dimen>
 
 </resources>
 
