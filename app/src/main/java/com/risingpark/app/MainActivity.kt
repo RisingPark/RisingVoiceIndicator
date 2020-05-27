@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         checkPermission()
 
         initView()
-
     }
 
     private fun checkPermission() {
