@@ -61,6 +61,9 @@ Decibel setting during recording.
 voice_indicator.setDecibel()    // input float
 ```
 
+### Download and Install Demo App
+
+https://appdistribution.firebase.dev/i/217ead519162fa76
 
 # License
 ```xml
